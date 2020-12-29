@@ -1,0 +1,342 @@
+css강의 필기
+
+course1
+*기본으로 display:block되어있음
+-display:block;옵션을 주면 element이고, block 옆에는 어떠한 element도 올 수 없다. 그래서 블록을 연속해서 놔두면 아래로 펼쳐지는 형태. block은 box임~
+-display:inline-block;옵션을 주면 block속성을 유지하면서 일직선 상에 위치 가능(옆으로). 하지만 이상한 여백이 있다
+-display:inline;옵션을 주면 box가 아니라 element이고, 유동적인거(box가 아님)라서 너비와 높이가 없다. 같은 직선에 있다(옆으로)
+
+
+course1-1
+-class를 통해 원래 객체에 display를 설정해주는 것과 달리, display:flex;는 객체들의 부모에 속성을 줘야함. 조상이 아니라, 바로 위의 부모 객체에 속성을 지정해야함!
+-flex container는 자식객체를 flex로 만들어주는 부모객체
+-display:flex; 를 주면 inline-block처럼 일직선 상에 위치가능하며 여백이 없음
+
+
+course1-2
+*flex container의 flex-direction옵션의 기본값은 row(수평)
+
+*flex-direction값이 row일때기준
+-justify-content은 수평축에 있는 flex children의 위치를 변경함
+-justify-content:center; 옵션 주면 박스들이 가운데 정렬됨
+-justify-content:space-between; 옵션을 주면 박스 사이에 같은 공간을 줘서 양끝(혹은 중간박스들도)으로 떨어짐
+-justify-content:space-around;옵션을 주면 box주변 옆 공간 크기(왼쪽 끝과 오른쪽 끝)를 같게만듬. 그리고 박스 사이의 가운데 공간은 (왼쪽끝공간+오른쪽끝공간)크기만큼임
+-align-items:center;을 줘도 세로로 가운데 정렬이 되는게 아님. 왜냐하면 wrapper의 높이가 box의 높이와 같으므로 이미 가운데 있는것이기때문 => flex container에 높이를 100vh로 주면됨
+-align-items:stretch;를 주고 자식 객체에 height값을 없애면 flex container만큼 쭉 뻗어서 채워줌
+-align-items:flex-end;를 주면 item들을 맨 밑쪽 끝에 놔둬줌.(flex-start가 기본값)
+-column-reverse 또는 row-reverse를 사용하면 요소들의 start와 end도 뒤바뀜
+
+***flex-direction이 row일때 main axis는 가로임(horizontal). 그리고 cross axis는 세로(vertical)
+-그리고 main axis방향으로 item을 옮기려면 justify-content사용
+-그리고 cross axis방향으로 item을 옮기려면 align-items사용
+
+
+course1-3
+*flex-direction값이 column이면 main axis는 세로, cross axis는 가로
+-justify-content와 align-items의 옵션들을 반대로 본다고 생각하면 됨
+
+
+course1-4(객체 스스로가 움직이는 속성 2가지)
+*align-self: align-items과 비슷한데 한 box에만 해당됨. box스스로 cross axis방향으로 움직임(row일 때는 반드시 container에게 height설정 필요. 높이가 있어야 위아래로 움직일 수 있으니까)
+-예시) .box:nth-child(2){
+    /*2번째 box만 혼자 cross axis방향으로 가운데임*/
+    align-self: center;
+}
+
+*order은 html을 변경할 수 없을 때 유용함
+-기본적으로 order은 0임, order값이 높으면 순서가 뒤로감
+-예시) .box:nth-child(2){
+     /*원래 1,2,3순서였는데 1,3,2가됨*/
+     order:1;
+}
+
+course1-5
+*flex-wrap의 기본값은 nowrap; 우리가 미리 width를 설정했어도, 그 너비가 바뀌어도 모든 item들을 한줄에 다 구겨넣음
+-flex-wrap:wrap;는 item의 width를 유지해줌
+-flex-wrap: wrap-reverse;을 하면 item을 화면 크기에 맞춰서 거꾸로 놔줌.(1~7까지 있고, 한 줄에 item이 3개씩 들어가는경우: 7/456/123). 아래부터 위로 정렬된것. wrap이랑 위아래의 줄이(행별로) 바뀌는 느낌. wrap-reverse;는 어려우니까 감잡기!
+
+*flex-direction: row-reverse; row가 원래 기본값(가로)이고, row-reverse를하면 html을 바꾸지 않아도 item의 순서를 거꾸로 뒤집어줌
+-flex-direction: column-reverse; 세로로 보이게 하되, item순서를 거꾸로 뒤집어줌
+
+*flex-flow의 경우 첫값은 direction, 두번째값은 wrap값을 적어서 한번에 바꾸는것
+
+*align-content은 flex box사이에서 줄이 나눠지는 공간(수직 빈공간). line을 변경함. line은 cross axis에 있지
+-align-content: flex-start; 하면 이 공간이 없어짐
+-align-content: center;가운데 정렬
+-align-content: space-between; 빈공간이 item사이에 있음
+
+course1-6(***반응형 디자인에 유용***)
+*flex-shrink는 element의 행동을 정의하는 것
+-예시) .box:nth-child(2){
+    background-color: black;
+    flex-shrink: 1;
+}
+-flex-shrink는 1이 기본값임. 만약 2로 설정해놓으면, flex-wrap가 noweap일 경우,공간이 없어질때( item width)가 줄어들때 2번자식이 다른 자식보다 2배씩 줄어든다.
+
+*flex-grow는 flex-shrink와 같지만 반대로 작용함. 즉, 공간이 커져서 여분 공간이 생기는 경우 item이 더 커져서 공간을 채움.
+-기본값은 0. 여러개의 자식이 0이 아닌 값을 가지면 남는 공간을 분할해서 가지지만, grow값이 큰 item이 더 많이 가져감.
+
+
+course1-7
+*flex-basis는 width나 height 비슷한데, element의 처음 크기를 설정하는 것임. 만약 공간이 넓어지거나 좁아지면 flex-grow와 flex-shrink에 의해 값이 바뀌게 됨.
+-flex-basis는 main axis에서 작용하는 속성임
+-flex-direction에 따라 width나 height둘중 하나처럼 취급됨
+
+
+=======================================================
+course2-1
+*flex를 이용하면 grid를 만들기 어려우므로 display: grid;이용
+
+course2-2
+*display: grid; 를 하면 자식 객체의 갯수만큼 grid가 만들어짐
+-grid design은 부모객체에서 진행됨
+-grid-template-columns를 통해 너비(열 크기) 조절할 수 있음
+-grid-template-rows를 통해 높이(행 높이) 조절할 수 있음
+-예시)  grid-template-columns: 20px 55px 89px 100px;하면 첫 컬럼은 20px, 두번째는 55px,,,
+
+*gap: 10px;를 통해 행과 열사이 모든 간격을 조정
+-grid-column-gap: 10px;를 통해 열사이 간격 조정
+-row-gap:10px;를 통해 행사이 간격 조정
+
+
+course 2-3
+*repeat(갯수, 크기)함수 이용하기
+-grid-template-columns: repeat(4,200px);를 하면 grid-template-columns: 200px 200px 200px 200px와 똑같은 효과임
+
+*auto
+-grid-template-columns: auto 200px;를 하면 두번째 열은 200px이고, 나머지 열들은 가능한 크게 만들어준다(나머지 열들의 크기는 동일)
+
+*grid-template-areas를 통해 그리드를 이용해 레이아웃을 만들 수 있음
+-예시) grid-template-areas: 
+    "header header header header"
+    "content content content nav"
+    "content content content nav"
+    "footer footer footer footer"; /*맨윗줄엔 헤더가 4칸, 두번째줄엔 컨텐트3칸과 네비1칸 이런식임. 만약 " "안에 area를 채워넣지않고 .을 채워놓으면 빈칸이 됨*/
+-grid-template-areas를 이용하려면 grid-area이름을 설정해줘야함
+-예시) .header{
+    background-color: chartreuse;
+    grid-area: header;
+} 이런식으로
+
+
+course2-4(옵션을 이용해 늘이기. stretch)
+*grid-column-start와 grid-column-end를 이용해서, 컬럼이 시작하는 줄과 컬럼이 끝나는 줄을 선택할 수 있다
+-start와 end옵션이 컬럼의 번호가 아니라 '줄(열)의 번호'임을 꼭 기억할 것
+
+*grid-row-start와 grid-row-end도 있음
+-grid-row-start를 이용해서 html엘리먼트를 건드리지 않고 정렬 순서를 바꿔줄 수도 있음
+
+
+course 2-5
+*start와 end를 따로 사용하지 않고 grid-column: 1 / 5;이런식으로 사용 가능
+-start와 end를 따로 사용하지 않고 grid-row: 1 / 4;이렇게도 사용 가능
+
+*줄을 셀 때, 1 / 5까지가고 5번줄이 마지막이라면 1/-1이라고 해도 됨.
+-coulmn의 경우 왼쪽에서 부터 1,2,3,,,, 오른쪽에서부터 -1,-2,-3,,,순서
+
+*span을 이용해서 cell(보통 사각형)을 몇 개 갖는지로 나타낼 수도 있음
+- grid-column: span 4;를 하면 grid-column: 1 / 5; grid-column: 1 / -1;과 같은 것임
+- grid-row: 2 / span 2;를 하면 grid-row:2/4;와 같은게됨. 2에서 시작해서 cell이 2개/2에서 시작해서 4번줄까지
+
+
+course 2-6
+*grid-template-columns: [first-line] 100px [second-line] 100px [third-line] 100px [fourth-line] 100px [fifth-line] 100px;를 통해 세로줄 각각에 이름을 지정해줄 수 있음. []안에 이름이 들어가는 것
+-grid-column: first-line / fifth-line;는 grid-column: 1 / 5;와 동일한 의미
+
+*grid-template-rows: repeat(4,100px [sexy-line]); 를 해주면 100px [sexy-line] 100px ,,,와 동일한 의미인데, 그러므로 첫번째 라인에는 이름이 없다! 두번째 라인부터 sexy-line이라는 이름을 갖는 것
+-grid-row:sexy-line 1 / sexy-line 3;은 grid-row:2/4;처럼 사용할 수 있음
+
+
+course2-7(유연한 레이아웃 가능. 화면 크기가 바껴도 레이아웃은 그대로임)
+*1fr(fraction-사용가능한 공간)은 grid container에서 얻을 수 있는 값으로 body의 width값을 다가짐. fr은 기본적으로 가능한 만큼 공간을 차지하는 것.
+-grid container의 너비값이 작으면 1fr도 작아짐
+-그리고 이 template-columns는 모두 같은 값을 가짐
+-만약 4fr 4fr 4fr 4fr이면 1fr이 4개있는것과 같은 의미임
+
+*fr은 가능한한 많은 공간을 차지함
+-그러므로 grid container의 높이를 지정해주지 않고 grid-template-rows: repeat(4,1fr);를 사용하면 높이가 0이므로 객체가 없어짐
+
+*2-3의 grid-template-areas처럼 사용하되, 높이와 너비를 지정하기
+-예시)  grid-template: 
+    "header header header header" 1fr
+    "content content content nav" 2fr
+    "footer footer footer footer" 1fr / 1fr 1fr 1fr 1fr; 
+-이름 지정 가능. 하지만 모두 설정하거나 모두 설정하지 않아야함) grid-template: 
+    [header-start]"header header header header" 1fr[header-end]
+    [content-start] "content content content nav" 2fr[content-end]
+    [footer-start] "footer footer footer footer" 1fr [footer-end]/ 1fr 1fr 1fr 1fr; 
+-grid-template에서 repeat는 적용되지 않는 함수임
+
+course2-8
+*grid-container는 grid를 가지고 있고, grid 자체를 채우게함
+
+*기본값이 justify-items: stretch;
+-justify-items: start;이면 item들이 처음부터 시작해서 같은 크기의 row, col을 가지고 있지만 늘여져있지 않음
+-start뿐만 아니라 end, center일때는 각각의 격자 칸 안에서 정해진 위치에 일정한 간격을 두고 나타남
+-div내용이 아무것도 없으면 자식 객체에서 height나 width를 따로 설정해줘야 stretch가 아닐때도 박스가 보임
+
+*align-items의 경우에도 justify-items과 마찬가지로 적용됨. 기본값은 stretch
+
+*위의 두 가지를 따로 사용하지 않고 place-items하나만 사용가능
+-place-items: stretch center;은 align-items:stretch;와 justify-items:center;를 같이 사용한 것과 동일한 기능을 함. 각 사각형 하나하나에 적용하는 것
+
+
+course2-9
+*content는 grid자체를 움직이는 거고, items는 item각각을 움직이는 것임
+-justify-content와 align-content를 사용하면 각각 모든 grid가 수평적으로, 수직적으로 움직임
+-place-content도 있는데, 이는 위의 두 가지를 한번에 쓸 수 있게 하는것. 순서는 place-items와 마찬가지로 수직 수평임. 모든 사각형 전체를 한번에 움직이는 것
+
+
+course2-10
+*align-self, justify-slef를 이용하면 (자식 객체에 작성) 자신에게만 적용되는 것
+-place-self: 수직 수평; 순서대로 사용할 수도 있음
+-align-items, justify-items를 이용하면 (부모 객체에 작성) 자식객체 모두에게 적용됨
+
+* .item*20>{$}하면 class이름이 item인 div 20개가 만들어지는데, 안의 내용은 1,2,3,4,,,,20임
+
+*grid-template-rows: repeat(4,100px);를 줬으니까 row는 4개밖에 없다. 그러므로 4개 밑으로의 row들은 높이가 설정되어있지 않음.
+-내가 설정한 row보다 많은 row가 있을 때 grid-auto-rows: 100px;를 사용하면 100px의 row를 자동으로 생성해준다! 만약 이를 사용하지 않으면 div가 그냥 글자크기만큼의 높이로 자동으로 생성됨
+
+*grid-auto-flow: column;을 하면 내가 설정한 element보다 더 많은 element가 있을 때, column을 자동으로 생성해줌. 원래 순서가 1 2 3,,,\n 4 5 6,,,\n 느낌이라면 이것을 이용했을 때 순서는 1 5 6 ,,, \n 2 6 10 ,,, \n 3 7 11,,,임.
+-grid-auto-flow: row;을 하면 내가 설정한 element보다 더 많은 element가 있을 때, row를 자동으로 생성해줌
+
+*grid-auto-flow: column; grid-auto-columns: 100px;를 같이 사용하면 설정한 element보다 더 많은 element가 있을 때, columns를 같은 크기로 생성해줌
+-grid-auto-columns: 100px;만 사용하면 예쁘게 안됨. 왜냐하면 설정한 element보다 더 많은 element가 있을 때, 기본적으로 row가 더 생기기 때문에 column을 설정해도 의미가 없다
+
+
+course2-11
+*grid-template-columns: repeat(10,minmax(100px, 1fr));를 이용하면 화면이 작아져도 item의 크기는 최소 100px, 화면이 커져도 item의 최대 크기는 1fr로 설정하는 것
+
+
+course2-12(*반응형 웹디에서 중요)
+*auto-fill을 이용 grid-template-columns: repeat(auto-fill,minmax(100px, 1fr));이렇게 사용
+-colum을 만들어주는 일을 함. 우리가 준 사이즈 안에서 계속 컬럼이 생김(안보여도 컬럼이 있는 것임). 
+-해당 row를 column이 있는만큼 많이 채우는 것(column이 비어있더라도)
+
+*auto-fit을 이용 grid-template-columns: repeat(auto-fit,minmax(100px, 1fr)); 이렇게 사용
+-element들을 화면 크기에 딱 맞게 늘여서(stretch) 채워주는 것
+
+
+course2-13
+*max-content: content의 내용에 맞춰서 box 크기가 가능한 크게
+-min-content: content의 내용에 맞춰서 box 크기가 가능한 작게
+-grid-template-columns: max-content min-content; div안에 들어간 글자가 가로로 한줄에 나오도록, div안에 들어간 글자가 모두 박스안에 있되, 정해진 높이값보다 height가 커지지 않도록 만듬
+
+*-예시) grid-template-columns: repeat(5, minmax(max-content, 1fr)); 를 하면 최소값은 max-content(가능한 크게), 최대값은 1fr(max-content보다 1fr이 작을수도있음)
+-grid-template-columns: repeat(auto-fit, minmax(20px, max-content)); 이렇게 결합가능
+
+
+course 3-0(scss)
+*npm install, npm install node-sass, npm run dev
+
+*src밑에있는 styles.scss에서 컴파일하면 dist밑에있는 styles.css파일이 바뀌고, index.html은 css파일을 보는것임. 브라우저는 scss파일 이해못함
+
+
+course3-1
+*scss를 이용하면 콘솔에서 에러도 바로바로 알려줌
+
+* 밑줄(_)이 있는 파일은 css로 변하지 않았으면 하는 파일임. scss만을 위한 것
+-_variables.scss파일 안에 $bg: red;라고 작성하고, styles.scss파일에 @import "_variables";
+body{
+  background-color: $bg;
+}라고 작성하면 배경화면 색깔이 bg의 색. 즉, red로 바뀜
+-배경화면 색상 뿐만아니라 css style의 모든 것을 변수로 설정하고 받아와서 사용가능
+
+*nesting은 타게팅하는 element를 정확하게 해줌
+-.box{ margin-top: 10px; }
+.box h2{color: blue;}
+.box button{ color: red;} 이거랑 밑이랑 동일한 소스임. 부모객체안에 여러개 넣어서 css적용가능
+.box{ margin-top: 10px;
+  h2{color: blue; }
+  button{color: red;} }
+-.box:hover{ background-color: green; }처럼 따로 있는 것도 .box{ &:hover{ background-color: green; }처럼 &(앰퍼샌드)를 이용해서 가능
+-제일 상위 객체뿐만 아니라, 모든 객체는 스스로 부모가 되어 다른 여러가지 속성을 가질 수 있음
+
+
+course 3-2
+*mixin을 이용하면 상황에 따라 코딩을 다르게 하는거 가능
+-_mixins에서 @mixin 이름{설정} 하고, styles파일에서 @import "_mixins"; ~{@include 이름();}형태로 사용
+-_mixins.scss파일을 만들고, styles.scss에서 @import "_mixins";하면 됨
+-_mixins파일에서 @mixin sexyTitle{ color: blue; font-size: 30px; margin-bottom: 20px; }하고
+styles파일에서 @import "_mixins"; h1{@include sexyTitle();}하면 사용가능
+
+*mixin에서 매개변수 사용 가능
+-@mixin link($color){ text-decoration: none; display: block; color:$color; }
+-헷갈리지 않기: mixin에서 매개변수는 $로 사용하고, scss에서 자기자신을 가리키는 변수는 &로 사용
+
+*if, else, ==등도 사용가능. mixin안에서 @if{ ~ }이런식으로 사용 가능
+
+
+course3-3
+*extend는 다른 코드를 확장(extend)하거나 코드를 재사용할 때 사용, page에서 분리해야하는 element들이 많을 때 유용
+-%를 사용. _buttons.scss에서 %butoon{설정}해주고,
+styles.scss에서 @import "_buttons.scss";a{ @extend %button;} 이런식으로 사용
+
+
+course3-4
+*mixin의 content
+-_mixins에서 @mixin responsive{ @content; }하고,
+styles에서 @import "_mixins.scss"; a{ @include responsive{ text-decoration: none;} }이렇게 사용
+
+*예시)
+-_mixins.scss(수치가 제대로 되지 않아서 이상하지만, 현실에선 제대로된 값을 설정할 것)
+$minIphone: 500px;
+$maxIphone: 690px;
+$minT: $minIphone+1;
+$maxT: 1120px;
+
+@mixin responsive($device){
+    @if $device == 'iphone'{
+        @media screen and (min-width: $minIphone) and (max-width:$maxIphone ){
+         //media 사이즈가 $minIphone~$maxIphone만큼일 때 설정
+            @content;
+        }
+    }
+    @else if $device == 'tablet'{
+        @media screen and(min-width: $minT) and (max-width: $maxT ){
+            @content;
+        }
+    }
+    @else if $device == 'iphone-l'{
+        @media screen and ( min-width: $minIphone)and (max-width: $maxIphone) and (orientation:landscape){
+            @content;
+        }
+    }
+    @else if $device == 'ipad-l'{
+        @media screen and(min-width: $minT) and (max-width: $maxT ) and (orientation:landscape){
+            @content;
+        }
+    }
+}
+-styles.scss
+@import "_mixins.scss";
+h1{
+  color:red;
+  @include responsive("iphone"){ //iphone일때 글자색 변경
+    color: yellow;
+  }
+  @include responsive("iphone-l"){ //iphone-l일때 폰트사이즈 변경
+    font-size: 60px;
+  }
+}
+
+*mixin진짜 많으니까 구글링해서 찾아쓰면됨.
+
+
+course4 클론코딩...시간없으니까 나중에 보자!
+*4-2
+-사이드바를 왼쪽에 display: fixed하고 오른쪽에 컨텐츠를 나타나게 하려면 오른쪽 컨텐츠는 margin-left로 당겨줘야함
+-그라데이션 줄 때 linear-gradient( 각도 또는 방향, 시작 색, 종료 색);사용. 방향을 지정할 때는 to top, to left등 to키워드가 함께 사용
+
+*4-4
+-flexbox가 정렬하기 좋음
+-격자는 grid사용
+-처음에 공간 설계 및 분리 잘하는게 중요
+-body>*:not(.footer) {설정}은 body의 직계 자식(손주x 바로밑의 자식)을 footer을 제외한 모두 선택하는걸 의미함
+
+*4-6
+-transform: translate(x축거리, y축거리);로 요소 이동가능
+-transition: transition-property(요소설정), transition-duration(진행시간), transition-timing-function(진행속도), transition-delay )을 사용하여 동적인 효과를 주는 것이 가능
+
+*4-8
+-이미지를 직접 넣는 대신, div를 주고 background를 이미지로 설정하면 이미지가 찌그러지지않고 배경을 채움
