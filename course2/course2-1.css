@@ -1,0 +1,22 @@
+.wrapper{ 
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.box{
+    flex-basis: 30%;
+    background: peru;
+    color:white;
+    display: flex;
+    font-size: 50px;
+    justify-content: center;
+    align-items: center;
+}
+
+.box:nth-child(4){
+    margin-top: 10px;
+}
+
+/*4번과 5번사이에 공간이 생김*/
+/*flex box에서 grid를 만들기는 어렵다*/

@@ -1,0 +1,10 @@
+body{ /*box의 부모가 flex container인것*/
+    display: flex;
+}
+
+.box{
+    width: 200px;
+    height: 200px;
+    background: orange;
+    color:white;
+}

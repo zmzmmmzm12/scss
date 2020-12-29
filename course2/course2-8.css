@@ -1,0 +1,24 @@
+.grid{
+    display: grid;
+    gap:5px;
+    grid-template-columns: repeat(4,1fr);
+    grid-template-rows: repeat(4,1fr);
+    height: 50vh;
+    place-items: stretch center;
+}
+
+.header{
+    background-color: chartreuse;
+}
+
+.content{
+    background-color: rgb(45, 134, 193);
+}
+
+.nav{
+    background-color: rgb(209, 143, 57);
+}
+
+.footer{
+    background-color: rgb(186, 78, 180);
+}

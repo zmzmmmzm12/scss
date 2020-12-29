@@ -1,0 +1,29 @@
+.grid{
+    display: grid;
+    gap:10px;
+    grid-template: 
+    [header-start]"header header header header" 1fr[header-end]
+    [content-start] "content content content nav" 2fr[content-end]
+    [footer-start] "footer footer footer footer" 1fr [footer-end]/ 1fr 1fr 1fr 1fr; 
+    height: 50vh;
+}
+
+.header{
+    background-color: chartreuse;
+    grid-area: header;
+}
+
+.content{
+    background-color: rgb(45, 134, 193);
+    grid-area: content;
+}
+
+.nav{
+    background-color: rgb(209, 143, 57);
+    grid-area: nav;
+}
+
+.footer{
+    background-color: rgb(186, 78, 180);
+    grid-area: footer;
+}

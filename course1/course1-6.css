@@ -1,0 +1,21 @@
+.wrapper{ /*box의 부모가 flex container인것*/
+    display: flex;
+    /*Main Axis*/
+    justify-content: space-around;
+    height: 100vh;
+}
+
+.box{
+    width: 200px;
+    height: 200px;
+    background: orange;
+    color:white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.box:nth-child(2){
+    background-color: black;
+    flex-shrink: 1;
+}

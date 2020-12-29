@@ -1,0 +1,17 @@
+.grid{
+    display: grid;
+    color: white;
+    gap:5px;
+    height: 50vh;
+    grid-template-columns: repeat(auto-fit, minmax(20px, max-content));
+    grid-template-rows: 130px;
+    margin-bottom: 30px;
+}
+
+.item:nth-child(odd){
+    background-color: greenyellow;
+}
+
+.item:nth-child(even){
+    background-color: blue;
+}
